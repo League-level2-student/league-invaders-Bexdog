@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		otherFonts = new Font("Arial",Font.PLAIN,25);
 	}
 	void updateMenuState(){
+		
 	}
 	void updateGameState(){
 		ship.update();
