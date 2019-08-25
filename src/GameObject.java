@@ -2,12 +2,11 @@ import java.awt.Graphics;
 
 
 public class GameObject   {
-	//remove randy later
-	int randy=1;
 	int x;
     int y;
     int width;
     int height;
+    boolean isAlive = true;
    public GameObject(int x,int y,int width,int height) {
 	   this.x=x;
 	   this.y=y;
@@ -20,4 +19,5 @@ public class GameObject   {
    void draw(Graphics g) {
 	  
    }
+   
 }
