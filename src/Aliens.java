@@ -8,6 +8,7 @@ public class Aliens extends GameObject {
 		
 	}
 	void update(int hi, int ih, int i) {
+		super.update();
 		y+=5;
 	}
 	void draw(Graphics g,int hi, int ih, int i) {

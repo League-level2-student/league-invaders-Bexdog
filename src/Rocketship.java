@@ -10,10 +10,10 @@ public class Rocketship extends GameObject {
 	boolean right;
 	public Rocketship(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		speed=5;
+		speed=8;
 	}
 	void update(int hi) {
-		
+		super.update();
 		if(up) {
 			y-=speed;
 		}

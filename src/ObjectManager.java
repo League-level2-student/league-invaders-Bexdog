@@ -5,12 +5,16 @@ import java.util.Random;
 public class ObjectManager {
 long enemyTimer=0;
 long enemySpawnTime=1000;
+int score = 0;
 Rocketship rocket;
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 ArrayList<Aliens> aliens = new ArrayList<Aliens>();
 ObjectManager(Rocketship rocket){
 		this.rocket = rocket;
 	}
+public int getScore() {
+	return score;
+}
 	void update() {
 		rocket.update(1);
 		for(int i = 0;i<projectiles.size();i++) {
@@ -32,6 +36,7 @@ ObjectManager(Rocketship rocket){
 			
 			aliens.get(i).draw(g,1,1,1);
 		}
+		
 	}
 	void addProjectile(Projectile i) {
 		projectiles.add(i);
@@ -52,7 +57,33 @@ void purgeObjects() {
 			aliens.remove(aliens.get(i));
 		}
 	}
+	for(int i = 0;i<projectiles.size();i++) {
+		if(!projectiles.get(i).isAlive) {
+			projectiles.remove(projectiles.get(i));
+		}
+	}
+	if(!rocket.isAlive) {
+		
+	}
 }
+void checkCollision() {
+	for(Aliens a : aliens){
+		if(rocket.collisionBox.intersects(a.collisionBox)){
+               rocket.isAlive = false;
+               
+        }
+	}
+        for(Aliens b : aliens){
+        	for(Projectile c : projectiles){
+        		if(c.collisionBox.intersects(b.collisionBox)) {
+        			b.isAlive = false;
+        			c.isAlive = false;
+        			score++;
+        			
+        	}
+        	}
+        }
 
+}
 }
 

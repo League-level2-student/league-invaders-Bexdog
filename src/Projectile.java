@@ -9,7 +9,9 @@ int speed = 10;
 		
 	}
 void update(int hi,int i) {
-		if(y < 0) {
+	super.update();
+	this.y-=speed;	
+	if(y < 0) {
 			isAlive = false;
 		}
 		

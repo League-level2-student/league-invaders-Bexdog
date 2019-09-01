@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
-	int currentState = 0;
+	public int currentState = 0;
 	Font titleFont;
 	Font otherFonts;
 	boolean doiwanttobefixed=true;
@@ -32,6 +32,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
 		manager.update();
 		manager.manageEnemies();
+		manager.checkCollision();
+		manager.purgeObjects();
+		if(!ship.isAlive) {
+			currentState = END_STATE;	
+		}
 	}
 	void updateEndState(){
 	
@@ -51,6 +56,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
 		manager.draw(g);
+		g.setFont(otherFonts);
+		g.drawString(manager.getScore()+"", 400, 50);
+		
 	}
 	void drawEndState(Graphics g){
 		g.setColor(Color.RED);
@@ -59,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.drawString("Game Over", 100, 175);
 		g.setFont(otherFonts);
-		g.drawString("You killed "+" enemies", 120, 325);
+		g.drawString("You killed "+manager.getScore()+" enemies", 120, 325);
 		g.drawString("Press ENTER To Restart", 95, 450);
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -102,10 +110,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	        }
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyCode());
-		if(e.getKeyCode()==10) {
+		//System.out.println(e.getKeyCode());
+		if(e.getKeyCode()==10) {		
+			if(currentState==END_STATE) {
+				ship = new Rocketship(250,700,50,50);
+				manager = new ObjectManager(ship);
+			}
 			currentState++;
+			
 		}
+		
 		if(e.getKeyCode()==32) {
 			manager.addProjectile(new Projectile(ship.x+20, ship.y, 10, 10));
 		}
