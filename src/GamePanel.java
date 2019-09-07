@@ -5,11 +5,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import  javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+	 public static BufferedImage alienImg;
+
+     public static BufferedImage rocketImg;
+
+     public static BufferedImage bulletImg;
+
+     public static BufferedImage spaceImg;
+
+
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -24,6 +37,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		timer=new Timer(1000/60,this);
 		titleFont = new Font("Arial",Font.BOLD,50);
 		otherFonts = new Font("Arial",Font.PLAIN,25);
+		 try {
+
+             alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+
+             rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+
+             bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+
+             spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+
+     } catch (IOException e) {
+
+             // TODO Auto-generated catch block
+
+             e.printStackTrace();
+
+     }
+
+
 	}
 	void updateMenuState(){
 		
@@ -53,8 +85,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	void drawGameState(Graphics g){
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+		g.drawImage(GamePanel.spaceImg, 0, 0, LeagueInvaders.width, LeagueInvaders.height, null);
 		manager.draw(g);
 		g.setFont(otherFonts);
 		g.drawString(manager.getScore()+"", 400, 50);
@@ -121,6 +152,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		if(e.getKeyCode()==32) {
+			if(currentState==0) {
+				JOptionPane.showMessageDialog(null, "To play: use the wasd keys to move, "+"and the space bar to shoot, try not to get hit!");
+			}
 			manager.addProjectile(new Projectile(ship.x+20, ship.y, 10, 10));
 		}
 		if(currentState==3) {

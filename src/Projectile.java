@@ -17,7 +17,6 @@ void update(int hi,int i) {
 		
 	}
 	void draw(Graphics g,int hi,int i) {
-		g.setColor(Color.red);
-		g.fillRect(x, y, width, height);
+		g.drawImage(GamePanel.bulletImg, x, y, width, height, null);
 	}
 }
